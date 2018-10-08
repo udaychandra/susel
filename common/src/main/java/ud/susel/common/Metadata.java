@@ -1,5 +1,6 @@
 package ud.susel.common;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,9 +18,15 @@ import static ud.susel.common.Constants.SEMI_COLON;
  */
 public class Metadata {
 
-    private String providerName;
-    private String activateMethodName;
-    private List<Reference> references;
+    private final String providerName;
+    private final String activateMethodName;
+    private final List<Reference> references;
+
+    public Metadata(Class<?> serviceProvider, Method activateMethod, List<Reference> references) {
+        providerName = serviceProvider.getName();
+        activateMethodName = activateMethod != null ? activateMethod.getName() : null;
+        this.references = references;
+    }
 
     public Metadata(Class<?> serviceProvider, PropertiesHolder holder) {
         providerName = serviceProvider.getName();
@@ -59,6 +66,14 @@ public class Metadata {
         private final Class<?> serviceClass;
         private final String setterMethodName;
         private final boolean isList;
+        private final boolean isOptional;
+
+        public Reference(Class<?> serviceClass, String setterMethodName, boolean isList, boolean isOptional) {
+            this.serviceClass = serviceClass;
+            this.setterMethodName = setterMethodName;
+            this.isList = isList;
+            this.isOptional = isOptional;
+        }
 
         public Reference(String reference, ModuleLayer moduleLayer) {
             var tokens = reference.split(SEMI_COLON);
@@ -75,6 +90,7 @@ public class Metadata {
 
             setterMethodName = tokens[1];
             isList = Boolean.valueOf(tokens[2]);
+            isOptional = Boolean.valueOf(tokens[3]);
         }
 
         public Class<?> serviceClass() {
@@ -88,6 +104,9 @@ public class Metadata {
         public boolean isList() {
             return isList;
         }
+
+        public boolean isOptional() {
+            return isOptional;
+        }
     }
 }
-

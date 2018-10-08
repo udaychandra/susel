@@ -17,7 +17,7 @@ public class MyAnotherServiceImpl implements MyAnotherService {
     }
 
     @Activate
-    public void activate(Context context) {
+    public void activateCustom(Context context) {
         name = context.value("name");
     }
 
