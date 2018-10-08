@@ -1,0 +1,17 @@
+apply plugin: "jacoco"
+
+dependencies {
+    api project(":common")
+
+    testImplementation project(":test-util:mock-svc")
+    testImplementation project(":test-util:mock-svc-impl")
+}
+
+javaModule.extraTestModules = ["ud.susel.mock.svc", "ud.susel.mock.svc.impl"]
+javaModule.hacks {
+    exports("ud.susel", "ud.susel.util", "org.junit.platform.commons")
+}
+
+jacoco {
+    toolVersion = "0.8.2"
+}

@@ -1,0 +1,4 @@
+dependencies {
+    api project(":susel")
+    api project(":test-util:mock-svc")
+}
