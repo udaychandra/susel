@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class SuselPropertiesLoaderTest {
+public class SuselMetadataLoaderTest {
 
     @Test
     public void loadSuselPropertiesTest() throws Exception {

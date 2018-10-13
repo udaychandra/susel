@@ -15,6 +15,8 @@ import java.util.ServiceLoader;
 
 public class SuselImpl {
 
+    private static final String SERVICE_REF_NOT_FOUND = "No service providers found for %s but the service reference cardinality is not optional";
+
     private static final Object LOCK = new int[0];
 
     private static final Module SUSEL_MODULE = SuselImpl.class.getModule();
@@ -101,7 +103,15 @@ public class SuselImpl {
         var setterMethod = serviceProvider.getClass().getMethod(ref.setterMethodName(), ref.serviceClass());
         var serviceProviderList = getAll(ref.serviceClass());
 
-        // TODO: Handle cardinality and out-of-bounds.
-        setterMethod.invoke(serviceProvider, serviceProviderList.get(0));
+        if (serviceProviderList.isEmpty() && !ref.isOptional()) {
+            throw new RuntimeException(String.format(SERVICE_REF_NOT_FOUND, serviceProvider.getClass().getName()));
+        }
+
+        if (ref.isList()) {
+            setterMethod.invoke(serviceProvider, serviceProviderList);
+
+        } else {
+            setterMethod.invoke(serviceProvider, serviceProviderList.get(0));
+        }
     }
 }
