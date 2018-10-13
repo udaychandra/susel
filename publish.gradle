@@ -1,0 +1,48 @@
+apply plugin: "maven-publish"
+apply plugin: "signing"
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            pom {
+                name = "Susel common library"
+                description = "The common library used by Susel"
+                url = "https://github.com/udaychandra/susel"
+                licenses {
+                    license {
+                        name = "The Apache License, Version 2.0"
+                        url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                    }
+                }
+                developers {
+                    developer {
+                        id = "udaychandra"
+                        name = "Uday Tatiraju"
+                        email = "ud.chandra@gmail.com"
+                    }
+                }
+                scm {
+                    connection = "scm:git:git://github.com/udaychandra/susel.git"
+                    developerConnection = "scm:git:ssh://github.com/udaychandra/susel.git"
+                    url = "https://github.com/udaychandra/susel"
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
+            url = version.endsWith("SNAPSHOT") ? snapshotsRepoUrl : releasesRepoUrl
+            credentials {
+                username "$sonatypeUsername"
+                password "$sonatypePassword"
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}
