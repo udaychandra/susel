@@ -12,17 +12,11 @@ import java.util.List;
 public class MyAnotherServiceImpl implements MyAnotherService {
 
     private MyService myService;
-    private List<MyService> myMoreServices;
     private String name;
 
     @ServiceReference
     public void setMyService(MyService myService) {
         this.myService = myService;
-    }
-
-    @ServiceReference(cardinality = Cardinality.ONE_OR_MORE)
-    public void setMyMoreServices(List<MyService> myMoreServices) {
-        this.myMoreServices = myMoreServices;
     }
 
     @Activate

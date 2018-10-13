@@ -20,7 +20,7 @@ subprojects {
 
     sourceCompatibility = "11"
 
-    group "ud.susel"
+    group "io.github.udaychandra"
     version "0.1.0-SNAPSHOT"
 
     repositories {

@@ -16,7 +16,7 @@ public class LauncherTest {
         var expected = new Properties();
         expected.setProperty(
                 "ud.susel.mock.svc.impl.MyAnotherServiceImpl_Refs",
-                "ud.susel.mock.svc:ud.susel.mock.svc.MyService;setMyService;false;false,ud.susel.mock.svc:ud.susel.mock.svc.MyService;setMyMoreServices;true;false");
+                "ud.susel.mock.svc:ud.susel.mock.svc.MyService;setMyService;false;false");
         expected.setProperty("ud.susel.mock.svc.impl.MyAnotherServiceImpl_Activate", "activateCustom");
 
         var actual = new Properties();

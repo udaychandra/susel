@@ -31,7 +31,7 @@ public class ScannerTest {
 
         if (svcMetadata.isPresent()) {
             assertEquals("activateCustom", svcMetadata.get().activateMethodName());
-            assertEquals(2, svcMetadata.get().references().size(),
+            assertEquals(1, svcMetadata.get().references().size(),
                     "References count is not as expected");
 
             var ref = svcMetadata.get().references().get(0);
