@@ -1,5 +1,5 @@
 include ":common"
 include ":susel"
-include ":plugins:core"
 include ":test-util:mock-svc"
 include ":test-util:mock-svc-impl"
+include ":tool"

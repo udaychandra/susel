@@ -1,4 +1,4 @@
-package ud.susel.plugin.core.util;
+package ud.susel.tool.util;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;

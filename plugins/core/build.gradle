@@ -1,8 +1,0 @@
-dependencies {
-    api project(":susel")
-
-    testImplementation project(":test-util:mock-svc")
-    testImplementation project(":test-util:mock-svc-impl")
-}
-
-javaModule.extraTestModules = ["ud.susel.mock.svc", "ud.susel.mock.svc.impl"]

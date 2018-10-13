@@ -1,0 +1,2 @@
+com.example.MyServiceImpl_Refs=com.example\:com.example.MyOtherService;setMyOtherService;true;false
+com.example.MyServiceImpl_Activate=activate

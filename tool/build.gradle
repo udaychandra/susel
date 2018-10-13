@@ -1,10 +1,10 @@
 plugins {
-    id "jacoco"
     id "maven-publish"
 }
 
 dependencies {
     api project(":common")
+    api project(":susel")
 
     testImplementation project(":test-util:mock-svc")
     testImplementation project(":test-util:mock-svc-impl")
@@ -12,11 +12,7 @@ dependencies {
 
 javaModule.extraTestModules = ["ud.susel.mock.svc", "ud.susel.mock.svc.impl"]
 javaModule.hacks {
-    exports("ud.susel", "ud.susel.util", "org.junit.platform.commons")
-}
-
-jacoco {
-    toolVersion = "0.8.2"
+    exports("ud.susel.tool", "ud.susel.tool.impl", "org.junit.platform.commons")
 }
 
 publishing {

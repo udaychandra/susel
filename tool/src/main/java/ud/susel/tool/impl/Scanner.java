@@ -1,42 +1,41 @@
-package ud.susel.plugin.core;
+package ud.susel.tool.impl;
 
 import ud.susel.api.Activate;
 import ud.susel.api.Cardinality;
 import ud.susel.api.Context;
 import ud.susel.api.ServiceReference;
 import ud.susel.common.Metadata;
+import ud.susel.common.MetadataItem;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.List;
 
-import static ud.susel.plugin.core.util.ReflectionUtils.disallowArrayParam;
-import static ud.susel.plugin.core.util.ReflectionUtils.isPublicInstance;
-import static ud.susel.plugin.core.util.ReflectionUtils.paramType;
-import static ud.susel.plugin.core.util.ReflectionUtils.requiresParam;
-import static ud.susel.plugin.core.util.ReflectionUtils.requiresSingleParam;
+import static ud.susel.tool.util.ReflectionUtils.disallowArrayParam;
+import static ud.susel.tool.util.ReflectionUtils.isPublicInstance;
+import static ud.susel.tool.util.ReflectionUtils.paramType;
+import static ud.susel.tool.util.ReflectionUtils.requiresParam;
+import static ud.susel.tool.util.ReflectionUtils.requiresSingleParam;
 
 public class Scanner {
 
-    public List<Metadata> scan(Module module) {
-        var metadataList = new ArrayList<Metadata>();
+    public Metadata scan(Module module) {
+        var metadata = new Metadata(module);
         var descriptor = module.getDescriptor();
 
         descriptor.provides().forEach(provides -> {
             provides.providers().forEach(provider -> {
                 var providerClass = Class.forName(module, provider);
-                var metadata = buildMetadata(providerClass);
-
-                metadataList.add(metadata);
+                var metadataItem = buildMetadataItem(providerClass);
+                metadata.addItem(metadataItem);
             });
         });
 
-        return metadataList;
+        return metadata;
     }
 
-    private Metadata buildMetadata(Class<?> providerClass) {
+    private MetadataItem buildMetadataItem(Class<?> providerClass) {
         var methods = providerClass.getMethods();
-        var references = new ArrayList<Metadata.Reference>();
+        var references = new ArrayList<MetadataItem.Reference>();
         Method activateMethod = null;
 
         for (var method : methods) {
@@ -58,10 +57,10 @@ public class Scanner {
             }
         }
 
-        return new Metadata(providerClass, activateMethod, references);
+        return new MetadataItem(providerClass, activateMethod, references);
     }
 
-    private Metadata.Reference buildReference(Method method, ServiceReference serviceReference) {
+    private MetadataItem.Reference buildReference(Method method, ServiceReference serviceReference) {
         var paramHolder = paramType(method, 0);
 
         if (paramHolder.isList()) {
@@ -84,7 +83,7 @@ public class Scanner {
             }
         }
 
-        return new Metadata.Reference(
+        return new MetadataItem.Reference(
                 paramHolder.actualType(),
                 method.getName(),
                 paramHolder.isList(),

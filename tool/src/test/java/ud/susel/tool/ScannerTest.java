@@ -1,9 +1,10 @@
-package ud.susel.plugin.core;
+package ud.susel.tool;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ud.susel.mock.svc.MyService;
 import ud.susel.mock.svc.impl.MyServiceImpl2;
+import ud.susel.tool.impl.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -19,13 +20,13 @@ public class ScannerTest {
     @Test
     public void scanTest() throws Exception {
         Scanner scanner = new Scanner();
-        var metadataList = scanner.scan(testModule);
+        var metadata = scanner.scan(testModule);
 
-        assertEquals(3, metadataList.size(),
+        assertEquals(3, metadata.items().size(),
                 "Expected providers not found in the 'ud.susel.mock.svc.impl' module");
 
-        var svcMetadata = metadataList.stream()
-                .filter(metadata -> "ud.susel.mock.svc.impl.MyAnotherServiceImpl".equals(metadata.providerName()))
+        var svcMetadata = metadata.items().stream()
+                .filter(item -> "ud.susel.mock.svc.impl.MyAnotherServiceImpl".equals(item.providerName()))
                 .findFirst();
 
         if (svcMetadata.isPresent()) {

@@ -1,9 +1,9 @@
 package ud.susel.impl;
 
 import ud.susel.api.Context;
-import ud.susel.common.Metadata;
-import ud.susel.util.SuselPropertiesLoader;
-import ud.susel.util.SuselPropertiesNullException;
+import ud.susel.common.MetadataItem;
+import ud.susel.util.SuselMetadataLoader;
+import ud.susel.util.SuselMetadataNullException;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -19,12 +19,12 @@ public class SuselImpl {
 
     private static final Module SUSEL_MODULE = SuselImpl.class.getModule();
 
-    private final SuselPropertiesLoader propertiesLoader;
+    private final SuselMetadataLoader metadataLoader;
     private final Map<Class<?>, List<?>> serviceProvidersCache;
     private final Context context;
 
     public SuselImpl(Context context) {
-        propertiesLoader = new SuselPropertiesLoader();
+        metadataLoader = new SuselMetadataLoader();
         serviceProvidersCache = new HashMap<>();
         this.context = context;
     }
@@ -55,6 +55,7 @@ public class SuselImpl {
                 SUSEL_MODULE.addUses(service);
 
                 // Pass the application module layer that typically loads Susel.
+                // TODO: Can't rely on this assumption that Susel module layer will also contain the module in question.
                 var serviceProvidersIterator = ServiceLoader.load(SUSEL_MODULE.getLayer(), service);
 
                 for (S serviceProvider : serviceProvidersIterator) {
@@ -72,21 +73,21 @@ public class SuselImpl {
 
     private <S> void prepare(S serviceProvider) {
         try {
-            Metadata metadata = new Metadata(
+            MetadataItem metadataItem = new MetadataItem(
                     serviceProvider.getClass(),
-                    propertiesLoader.load(serviceProvider.getClass()));
+                    metadataLoader.load(serviceProvider.getClass()));
 
-            for (var ref : metadata.references()) {
+            for (var ref : metadataItem.references()) {
                 prepareReference(serviceProvider, ref);
             }
 
-            if (metadata.shouldActivate()) {
-                var activateMethod = serviceProvider.getClass().getMethod(metadata.activateMethodName(), Context.class);
+            if (metadataItem.shouldActivate()) {
+                var activateMethod = serviceProvider.getClass().getMethod(metadataItem.activateMethodName(), Context.class);
                 activateMethod.invoke(serviceProvider, context);
             }
 
-        } catch (IOException | SuselPropertiesNullException ex) {
-            throw new RuntimeException("Unable to load Susel properties/metadata. Check to see if you've generated the metadata with Susel plugin", ex);
+        } catch (IOException | SuselMetadataNullException ex) {
+            throw new RuntimeException("Unable to load Susel metadata. Check to see if you've generated the metadata with Susel plugin", ex);
         } catch (NoSuchMethodException ex) {
             throw new RuntimeException("Unable to load service provider. Activation method not found", ex);
         } catch (IllegalAccessException | InvocationTargetException ex) {
@@ -94,7 +95,7 @@ public class SuselImpl {
         }
     }
 
-    private <S> void prepareReference(S serviceProvider, Metadata.Reference ref)
+    private <S> void prepareReference(S serviceProvider, MetadataItem.Reference ref)
             throws NoSuchMethodException, RuntimeException, IllegalAccessException, InvocationTargetException {
 
         var setterMethod = serviceProvider.getClass().getMethod(ref.setterMethodName(), ref.serviceClass());

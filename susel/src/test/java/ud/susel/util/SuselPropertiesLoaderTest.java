@@ -8,7 +8,7 @@ public class SuselPropertiesLoaderTest {
 
     @Test
     public void loadSuselPropertiesTest() throws Exception {
-        SuselPropertiesLoader loader = new SuselPropertiesLoader();
+        SuselMetadataLoader loader = new SuselMetadataLoader();
 
         var holder = loader.load(this.getClass());
 
