@@ -2,6 +2,11 @@ plugins {
     id "jacoco"
 }
 
+project.ext {
+    pomName = "Susel library"
+    pomDescription = "A light weight library to build Java native (JPMS) modular applications"
+}
+
 dependencies {
     api project(":common")
 

@@ -1,3 +1,8 @@
+project.ext {
+    pomName = "Susel common library"
+    pomDescription = "The common library used by Susel"
+}
+
 if ("$pubToMC" == "yes") {
     apply from: "${project.rootDir}/publish.gradle"
 }

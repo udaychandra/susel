@@ -78,7 +78,7 @@ public class ReflectionUtils {
     /**
      * Determine the actual type of the method's parameter.
      *
-     * @apiNote handles simple parameters--the type of {@code List<T>} is considered to be a regular
+     * Note: handles simple parameters--the type of {@code List<T>} is considered to be a regular
      * class, not a nested {@link java.util.Collection}.
      *
      * @param method the method on which the parameter is defined.

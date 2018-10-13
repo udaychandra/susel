@@ -1,3 +1,8 @@
+project.ext {
+    pomName = "Susel tool"
+    pomDescription = "Tool that generated metadata used by Susel"
+}
+
 dependencies {
     api project(":common")
     api project(":susel")

@@ -1,13 +1,33 @@
 apply plugin: "maven-publish"
 apply plugin: "signing"
 
+javadoc {
+    options.addBooleanOption('html5', true)
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    classifier = "sources"
+}
+
+task javadocJar(type: Jar) {
+    from javadoc
+    classifier = "javadoc"
+}
+
+artifacts {
+    archives jar
+    archives sourcesJar
+    archives javadocJar
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
             pom {
-                name = "Susel common library"
-                description = "The common library used by Susel"
+                name = "" + project.ext.pomName.toString()
+                description = "" + project.ext.pomDescription.toString()
                 url = "https://github.com/udaychandra/susel"
                 licenses {
                     license {
@@ -28,6 +48,36 @@ publishing {
                     url = "https://github.com/udaychandra/susel"
                 }
             }
+
+            // create the sign pom artifact
+            pom.withXml {
+                def pomFile = file("${project.buildDir}/generated-pom.xml")
+                writeTo(pomFile)
+                def pomAscFile = signing.sign(pomFile).signatureFiles[0]
+                artifact(pomAscFile) {
+                    classifier = null
+                    extension = 'pom.asc'
+                }
+            }
+            
+            artifact(sourcesJar) {
+                classifier = "sources"
+            }
+            artifact(javadocJar) {
+                classifier = "javadoc"
+            }
+            // create the signed artifacts
+            project.tasks.signArchives.signatureFiles.each {
+                artifact(it) {
+                    def matcher = it.file =~ /-(sources|javadoc)\.jar\.asc$/
+                    if (matcher.find()) {
+                        classifier = matcher.group(1)
+                    } else {
+                        classifier = null
+                    }
+                    extension = 'jar.asc'
+                }
+            }
         }
     }
     repositories {
@@ -44,5 +94,5 @@ publishing {
 }
 
 signing {
-    sign publishing.publications.mavenJava
+    sign configurations.archives
 }
