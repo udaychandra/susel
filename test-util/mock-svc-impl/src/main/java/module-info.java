@@ -1,10 +1,16 @@
-module ud.susel.mock.svc.impl {
-    exports ud.susel.mock.svc.impl;
+import io.github.udaychandra.susel.mock.svc.MyAnotherService;
+import io.github.udaychandra.susel.mock.svc.MyService;
+import io.github.udaychandra.susel.mock.svc.impl.MyAnotherServiceImpl;
+import io.github.udaychandra.susel.mock.svc.impl.MyServiceImpl;
+import io.github.udaychandra.susel.mock.svc.impl.MyServiceImpl2;
 
-    requires ud.susel;
-    requires ud.susel.mock.svc;
+module io.github.udaychandra.susel.mock.svc.impl {
+    exports io.github.udaychandra.susel.mock.svc.impl;
 
-    provides ud.susel.mock.svc.MyService
-            with ud.susel.mock.svc.impl.MyServiceImpl, ud.susel.mock.svc.impl.MyServiceImpl2;
-    provides ud.susel.mock.svc.MyAnotherService with ud.susel.mock.svc.impl.MyAnotherServiceImpl;
+    requires io.github.udaychandra.susel;
+    requires io.github.udaychandra.susel.mock.svc;
+
+    provides MyService
+            with MyServiceImpl, MyServiceImpl2;
+    provides MyAnotherService with MyAnotherServiceImpl;
 }

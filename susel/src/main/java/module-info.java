@@ -1,5 +1,5 @@
-module ud.susel {
-    exports ud.susel.api;
+module io.github.udaychandra.susel {
+    exports io.github.udaychandra.susel.api;
 
-    requires ud.susel.common;
+    requires io.github.udaychandra.susel.common;
 }

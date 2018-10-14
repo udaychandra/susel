@@ -1,6 +1,6 @@
-module ud.susel.tool {
-    exports ud.susel.tool;
+module io.github.udaychandra.susel.tool {
+    exports io.github.udaychandra.susel.tool;
 
-    requires ud.susel.common;
-    requires ud.susel;
+    requires io.github.udaychandra.susel.common;
+    requires io.github.udaychandra.susel;
 }

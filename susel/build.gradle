@@ -14,9 +14,9 @@ dependencies {
     testImplementation project(":test-util:mock-svc-impl")
 }
 
-javaModule.extraTestModules = ["ud.susel.mock.svc", "ud.susel.mock.svc.impl"]
+javaModule.extraTestModules = ["io.github.udaychandra.susel.mock.svc", "io.github.udaychandra.susel.mock.svc.impl"]
 javaModule.hacks {
-    exports("ud.susel", "ud.susel.util", "org.junit.platform.commons")
+    exports("io.github.udaychandra.susel", "io.github.udaychandra.susel.util", "org.junit.platform.commons")
 }
 
 jacoco {

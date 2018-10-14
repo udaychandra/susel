@@ -1,3 +1,3 @@
-module ud.susel.mock.svc {
-    exports ud.susel.mock.svc;
+module io.github.udaychandra.susel.mock.svc {
+    exports io.github.udaychandra.susel.mock.svc;
 }

@@ -1,3 +1,3 @@
-module ud.susel.common {
-    exports ud.susel.common;
+module io.github.udaychandra.susel.common {
+    exports io.github.udaychandra.susel.common;
 }
