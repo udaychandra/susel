@@ -107,4 +107,18 @@ their cardinalities and the method that should be invoked to activate the servic
 There's a gradle [plugin](https://github.com/udaychandra/susel-gradle-plugin) that can automate the generation and packaging of these metadata files. 
 The plugin calls the Susel tool which can be manually invoked as well.
 
-> A maven plugin is in the works. Community contributions are welcome.
+> A maven plugin is in the works
+
+## Development
+This is a community project. All contributions are welcome.
+
+To start contributing, do the following:
+* Install JDK 11
+* Fork or clone the source code
+* Run the build using the gradle wrapper
+```bash
+gradlew clean build publishToMavenLocal
+```
+
+## License
+Apache License 2.0
