@@ -117,7 +117,7 @@ To start contributing, do the following:
 * Fork or clone the source code
 * Run the build using the gradle wrapper
 ```bash
-gradlew clean build publishToMavenLocal
+gradlew clean build
 ```
 
 ## License
