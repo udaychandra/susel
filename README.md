@@ -20,16 +20,16 @@ If you are using a build tool like Maven or Gradle, add the following dependency
 - Maven pom.xml
   ```xml
    <dependency>
-     <groupId>io.github.udaychandra</groupId>
+     <groupId>io.github.udaychandra.susel</groupId>
      <artifactId>susel</artifactId>
-     <version>0.1.1</version>
+     <version>0.1.2</version>
    </dependency>
    ```
 
 - Gradle build.gradle
   ```groovy
    dependencies {
-     compile 'io.github.udaychandra:susel:0.1.1'
+     compile 'io.github.udaychandra.susel:susel:0.1.1'
    }
    ```
 
