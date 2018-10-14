@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * A super charged JPMS based service loader.
+ * A super charged Java module system based service loader.
  */
 public class Susel {
 

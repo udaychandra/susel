@@ -2,7 +2,7 @@
 
 ## Susel
 <em>Su</em>per <em>Se</em>rvice <em>L</em>oader: Super charge the module aware service loader in Java 11. 
-Susel is a light weight library that helps one build Java native (JPMS) modular applications.
+Susel is a light weight library that helps one build Java module system native applications.
 
 ## Introduction
 Service loader mechanism of Java, introduced in Java 6 and revised in Java 9, is used to locate and load services. 
