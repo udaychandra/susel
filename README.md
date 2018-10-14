@@ -29,7 +29,7 @@ If you are using a build tool like Maven or Gradle, add the following dependency
 - Gradle build.gradle
   ```groovy
    dependencies {
-     compile 'io.github.udaychandra.susel:susel:0.1.1'
+     compile 'io.github.udaychandra.susel:susel:0.1.2'
    }
    ```
 
